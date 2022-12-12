@@ -34,6 +34,28 @@ export class StudentService {
     return existingStudent;
   }
 
+  //   Get All with pagination
+  async findAll(query: any) {
+    const page: number = parseInt(query.page) || 1;
+    const limit = query.limit || 9;
+
+    const findQuery = this.studentModel
+      .find()
+      .sort({ marks: query.sort })
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const data = await findQuery;
+    const total = await this.studentModel.count();
+
+    return {
+      data,
+      total,
+      page,
+      total_page: Math.ceil(total / limit),
+    };
+  }
+
   //   Get All
   async getAllStudents(): Promise<IStudent[]> {
     const studentData = await this.studentModel.find();

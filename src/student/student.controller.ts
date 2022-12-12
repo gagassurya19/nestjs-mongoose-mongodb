@@ -7,11 +7,16 @@ import {
   Param,
   Post,
   Put,
+  Query,
+  Req,
   Res,
 } from '@nestjs/common';
 import { CreateStudentDto } from 'src/dto/create-student.dto';
 import { UpdateStudentDto } from 'src/dto/update-student.dto';
+import { PaginationParams } from './paginationParams';
 import { StudentService } from './student.service';
+
+import { Request } from 'express';
 
 @Controller('student')
 export class StudentController {
@@ -59,6 +64,13 @@ export class StudentController {
     } catch (err) {
       return response.status(err.status).json(err.response);
     }
+  }
+
+  // Get data with pagination
+  @Get('filter')
+  async getAllPosts(@Req() req: Request) {
+    const results = await this.studentService.findAll(req.query);
+    return results;
   }
 
   //   Get all data
