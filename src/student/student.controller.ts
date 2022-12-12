@@ -7,13 +7,11 @@ import {
   Param,
   Post,
   Put,
-  Query,
   Req,
   Res,
 } from '@nestjs/common';
 import { CreateStudentDto } from 'src/dto/create-student.dto';
 import { UpdateStudentDto } from 'src/dto/update-student.dto';
-import { PaginationParams } from './paginationParams';
 import { StudentService } from './student.service';
 
 import { Request } from 'express';
